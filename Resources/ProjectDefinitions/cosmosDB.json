@@ -1,0 +1,105 @@
+{
+    "template": {
+        "name": "CosmosDB",
+        "description": "Create/Manage/Use/Read Cosmos DB.",
+        "location": "West Europe",
+        "resourceGroupPrefix": "ComosDB-",
+        "ARMtemplateStandard": [
+            "rg-budget-notification.json"
+        ],
+        "ARMtemplatesProject": [
+            "not implemented yet, but placeholder for project specific ARMtemplates"
+        ],
+        "roles": [
+            {
+                "type": "Custom",
+                "name": "cosmosDB"
+            }
+        ],
+        "policies": [
+            {
+                "name": "Allowed locations",
+                "type": "Built-in",
+                "parameters": [
+                    {
+                        "name": "listOfAllowedLocations",
+                        "value": [
+                            "westeurope"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Allowed resource types",
+                "type": "Built-in",
+                "parameters": [
+                    {
+                        "name": "listOfResourceTypesAllowed",
+                        "value": [
+                            "Microsoft.Compute",
+                            "Microsoft.insights",
+                            "Microsoft.HealthcareApis",
+                            "Microsoft.OperationalInsights",
+                            "Microsoft.Blueprint",
+                            "Microsoft.DevTestLab",
+                            "Microsoft.MachineLearning",
+                            "Microsoft.ClassicStorage",
+                            "Microsoft.Commerce",
+                            "Microsoft.ContainerService",
+                            "Microsoft.Storage/storageAccounts",
+                            "Microsoft.AnalysisServices/servers",
+                            "Microsoft.ApiManagement/service",
+                            "Microsoft.Network/applicationGateways",
+                            "Microsoft.Automation/automationAccounts",
+                            "Microsoft.ContainerInstance/containerGroups",
+                            "Microsoft.ContainerRegistry/registries",
+                            "Microsoft.ContainerService/managedClusters",
+                            "Microsoft.Batch/batchAccounts",
+                            "Microsoft.Cdn/profiles/endpoints",
+                            "Microsoft.CognitiveServices/accounts",
+                            "Microsoft.DocumentDB/databaseAccounts",
+                            "Microsoft.DataFactory/factories",
+                            "Microsoft.DataLakeAnalytics/accounts",
+                            "Microsoft.DataLakeStore/accounts",
+                            "Microsoft.DevTestLab/schedules",
+                            "Microsoft.EventGrid/eventSubscriptions",
+                            "Microsoft.EventGrid/topics",
+                            "Microsoft.EventHub/namespaces",
+                            "Microsoft.Network/expressRouteCircuits",
+                            "Microsoft.Network/azureFirewalls",
+                            "Microsoft.HDInsight/clusters",
+                            "Microsoft.Devices/IotHubs",
+                            "Microsoft.KeyVault/vaults",
+                            "Microsoft.Network/loadBalancers",
+                            "Microsoft.Logic/integrationAccounts",
+                            "Microsoft.Logic/workflows",
+                            "Microsoft.DBforMySQL/servers",
+                            "Microsoft.Network/networkInterfaces",
+                            "Microsoft.Network/networkSecurityGroups",
+                            "Microsoft.DBforPostgreSQL/servers",
+                            "Microsoft.PowerBIDedicated/capacities",
+                            "Microsoft.Network/publicIPAddresses",
+                            "Microsoft.RecoveryServices/vaults",
+                            "Microsoft.Cache/redis",
+                            "Microsoft.Relay/namespaces",
+                            "Microsoft.Search/searchServices",
+                            "Microsoft.ServiceBus/namespaces",
+                            "Microsoft.SignalRService/SignalR",
+                            "Microsoft.Sql/servers/databases",
+                            "Microsoft.Sql/servers/elasticPools",
+                            "Microsoft.StreamAnalytics/streamingjobs",
+                            "Microsoft.TimeSeriesInsights/environments",
+                            "Microsoft.Network/trafficManagerProfiles",
+                            "Microsoft.Compute/virtualMachines/extensions",
+                            "Microsoft.Compute/virtualMachines",
+                            "Microsoft.Compute/virtualMachineScaleSets",
+                            "Microsoft.Compute/disks",
+                            "Microsoft.Network/virtualNetworks",
+                            "Microsoft.Network/virtualNetworkGateways"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

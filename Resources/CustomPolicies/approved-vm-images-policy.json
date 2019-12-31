@@ -1,0 +1,83 @@
+{
+	"if": {
+		"allOf": [
+			{
+				"field": "type",
+				"equals": "Microsoft.Compute/virtualMachines"
+			},
+			{
+				"not": {
+					"anyOf": [
+						{
+							"field": "Microsoft.Compute/imageId",
+							"in": "[parameters('imageIds')]"
+						},
+						{
+							"allOf": [
+								{
+									"field": "Microsoft.Compute/imagePublisher",
+									"equals": "MicrosoftWindowsServer"
+								},
+								{
+									"field": "Microsoft.Compute/imageOffer",
+									"equals": "WindowsServer"
+								},
+								{
+									"field": "Microsoft.Compute/imageSKU",
+									"in": [
+										"2019-datacenter-core-with-containers-g2",
+										"2019-datacenter-core-g2",
+										"2019-Datacenter",
+										"2019-Datacenter-smalldisk",
+										"2016-Datacenter"
+									]
+								}
+							]
+						},
+						{
+							"allOf": [
+								{
+									"field": "Microsoft.Compute/imagePublisher",
+									"equals": "OpenLogic"
+								},
+								{
+									"field": "Microsoft.Compute/imageOffer",
+									"equals": "CentOS"
+								},
+								{
+									"field": "Microsoft.Compute/imageSKU",
+									"in": [
+										"7.7",
+										"8.0"
+									]
+								}
+							]
+						},
+						{
+							"allOf": [
+								{
+									"field": "Microsoft.Compute/imagePublisher",
+									"equals": "Canonical"
+								},
+								{
+									"field": "Microsoft.Compute/imageOffer",
+									"equals": "UbuntuServer"
+								},
+								{
+									"field": "Microsoft.Compute/imageSKU",
+									"in": [
+										"18_04-lts-gen2",
+										"18.04-LTS"
+									]
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	},
+	"then": {
+		"effect": "deny"
+	}
+}

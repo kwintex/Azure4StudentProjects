@@ -1,0 +1,18 @@
+{
+    "Name": "cosmosDB-Role",
+    "IsCustom": true,
+    "Id": "",
+    "Description": "The users of this role can create/manage/delete cosmosDB",
+    "Actions": [
+      "Microsoft.Authorization/*/read",
+      "Microsoft.DocumentDb/databaseAccounts/*",
+      "Microsoft.Network/virtualNetworks/*",
+      "Microsoft.ResourceHealth/availabilityStatuses/read",
+      "Microsoft.Resources/deployments/*",
+      "Microsoft.Resources/subscriptions/resourceGroups/read"
+
+    ],
+    "NotActions": [],
+    "AssignableScopes": []
+  }
+  

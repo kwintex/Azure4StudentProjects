@@ -1,0 +1,146 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "rgName": {
+            "type": "string"
+        },
+        "rgLocation": {
+            "type": "string",
+            "defaultValue": "westeurope"
+        },
+        "rgTemplate": {
+            "type": "string"
+        },
+        "GroupName": {
+            "type": "string"
+        },
+        "Budget": {
+            "type": "int",
+            "defaultValue": 10
+        },
+        "actionGroup": {
+            "type": "array",
+            "defaultValue": []
+        },
+        "StartDate": {
+            "type": "string"
+        },
+        "StopDate": {
+            "type": "string"
+        },
+        "Users": {
+            "type": "array",
+            "defaultValue": []
+        }
+    },
+
+    "variables": {
+    },
+
+    "resources": [
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2018-05-01",
+            "location": "[parameters('rgLocation')]",
+            "name": "[parameters('rgName')]",
+            "tags": {
+                "Template": "[parameters('rgTemplate')]",
+                "GroupName": "[parameters('GroupName')]",
+                "Budget": "[parameters('Budget')]",
+                "StartDate": "[parameters('StartDate')]",
+                "StopDate": "[parameters('StopDate')]"
+            },
+            "properties": {
+            }
+        },
+
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "name": "[parameters('rgName')]",
+            "resourceGroup": "[parameters('rgName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups/', parameters('rgName'))]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                    },
+                    "variables": {
+                    },
+                    "resources": [
+
+                        {
+                            "name": "[parameters('rgName')]",
+                            "type": "Microsoft.Consumption/budgets",
+                            "apiVersion": "2018-06-30",
+                            "properties": {
+                                "category": "Cost",
+                                "amount": "[parameters('budget')]",
+                                "timeGrain": "Annually",
+                                "timePeriod": {
+                                    "startDate": "[parameters('startDate')]"
+                                },
+                                "filters": {
+                                    "resourceGroups": [
+                                    ],
+                                    "resources": [
+                                    ],
+                                    "meters": [
+                                    ],
+                                    "tags": {
+                                    }
+                                },
+                                "notifications": {
+                                    "First-Notification": {
+                                        "enabled": true,
+                                        "operator": "GreaterThan",
+                                        "threshold": 50,
+                                        "contactEmails": "[parameters('Users')]"
+                                    },
+                                    "Second-Notification": {
+                                        "enabled": true,
+                                        "operator": "GreaterThan",
+                                        "threshold": 80,
+                                        "contactEmails": "[parameters('Users')]"
+                                    },
+                                    "Third-Notification": {
+                                        "enabled": true,
+                                        "operator": "GreaterThan",
+                                        "threshold": 95,
+                                        "contactEmails": "[parameters('Users')]",
+                                        "contactRoles": "Owner"
+                                    },
+                                    "Last-Notification": {
+                                        "enabled": true,
+                                        "operator": "GreaterThan",
+                                        "threshold": 100,
+                                        "contactEmails": "[parameters('Users')]",
+                                        "contactRoles": "Owner",
+                                        "contactGroups": "[parameters('actionGroup')]"
+                                    }
+
+
+
+                                }
+                            }
+                        }
+
+
+
+                    ],
+                    "outputs": {
+                    }
+                }
+            }
+        }
+    ],
+
+    "outputs": {
+    }
+
+}

@@ -1,0 +1,10 @@
+{
+    "general": {
+        "name": "HU Azure for Education",
+        "subscription": "e1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "tenant": "989xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", 
+        "location": "West Europe",
+        "SendGridPassword": "xxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "SendGridAPIKey": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    }
+}

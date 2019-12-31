@@ -1,0 +1,13 @@
+## Ignore files, build results etc
+
+# Others
+*.pfx
+
+#ProjectDefinition not yet production ready
+ProjectDefinition/webApp.json
+
+# User-specific files
+Settings/Settings.json
+Administration/Scripts/magweg.ps1
+Logs/AzureProjectAdministration.log
+Documentation/README.txt

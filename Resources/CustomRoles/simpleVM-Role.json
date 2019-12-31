@@ -1,0 +1,24 @@
+{
+  "Name": "simpleVM-Role",
+  "IsCustom": true,
+  "Id": "",
+  "Description": "The users of this role can create/manage/delete virtual machines",
+  "Actions": [
+    "Microsoft.Authorization/*/read",
+    "Microsoft.Compute/virtualMachines/*",
+    "Microsoft.Compute/locations/*",
+    "Microsoft.Compute/disks/*",
+    "Microsoft.DevTestLab/schedules/*",
+    "Microsoft.Network/networkinterfaces/*",
+    "Microsoft.Network/networkSecurityGroups/*",
+    "Microsoft.Network/virtualNetworks/*",
+    "Microsoft.Network/publicIpAddresses/*",
+    "Microsoft.Network/locations/*",
+    "Microsoft.ResourceHealth/availabilityStatuses/read",
+    "Microsoft.Resources/deployments/*",
+    "Microsoft.Resources/subscriptions/resourceGroups/read",
+    "Microsoft.Storage/storageAccounts/*"
+  ],
+  "NotActions": [],
+  "AssignableScopes": []
+}

@@ -1,0 +1,45 @@
+{
+    "template": {
+        "name": "Web App",
+        "description": "Create a web application (not App Service Plan).",
+        "location": "West Europe",
+        "resourceGroupPrefix": "WebApp-",
+        "ARMtemplateStandard": [
+            "rg-budget-notification.json"
+        ],
+        "ARMtemplatesProject": [
+            "not implemented yet, but placeholder for project specific ARMtemplates"
+        ],
+        "roles": [
+            {
+                "type": "Built-in",
+                "name": "webApp-Role"
+            }
+        ],
+        "policies": [
+            {
+                "name": "Allowed locations",
+                "type": "Built-in",
+                "parameters": [
+                    {
+                        "name": "listOfAllowedLocations",
+                        "value": [
+                            "westeurope"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Inherit a tag from the resource group",
+                "type": "Built-in",
+                "deployIfNotExists": true,
+                "parameters": [
+                    {
+                        "name": "tagName",
+                        "value": "GroupName"
+                    }
+                ]
+            }
+        ]
+    }
+}
