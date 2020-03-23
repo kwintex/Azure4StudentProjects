@@ -7,8 +7,8 @@
 ## Introduction
 Public Cloud Technology enables its users to create powerful IT solutions within minutes using emerging technologies such as artificial intelligence and Internet of Things. Thanks to the power of Public Cloud platforms and its attractive “pay-as-you-go” financial model, the public cloud is also very suitable for conducting research projects and ICT education: Creating a large ICT infrastructure, website, IoT solution or Blockchain Service is possible within minutes and when a lab or project is finished the ICT resources can easily be deleted.<br/>
 However, despite these advantages, cloud adoption within Education is still in its infancy. Reasons for this include:
-* Educators have no prior experience with this technology and are sometimes reluctant to use it. 
-* Most students do not have a credit card. 
+* Educators have no prior experience with this technology and are sometimes reluctant to use it.
+* Most students do not have a credit card.
 * Educators and its organizations are worried about security issues and costs.
 
 This project is an attempt to unleash the power of the cloud for small groups of students working on their ICT projects in a controlled Public Cloud environment.
@@ -22,7 +22,7 @@ After installation, usage is technically just executing a single PowerShell scri
 
 For example:
 ```PowerShell
-/Administration/Scripts/Add-AzureProject.ps1 -Template simpleVM -GroupName Team1 -Budget 10 -StopDate 2020-05-01 -Users foo@bar.com,bar@foo.com
+./Administration/Scripts/Add-AzureProject.ps1 -Template simpleVM -GroupName Team1 -Budget 10 -StopDate 2020-05-01 -Users foo@bar.com,bar@foo.com
 ```
 
 ## Install
@@ -33,7 +33,6 @@ It all starts with a fresh Azure Dev/Test Subscription, dedicated for your deplo
 In depth documentation for end users and those who are  interested in the project:
 * [Selecting a Cloud Landing Zone](Documentation/LandingZone.md)
 * [Technical Design](Documentation/TechnicalDesign.md)
-* [Directory Structure](Documentation/DirectoryStructure.md)
 * [User Stories and User Manual](Documentation/UserManual.md)
   * [Group of Students | Educator](Documentation/UserManual.md#students)
   * [Support Engineer](Documentation/UserManual.md#support)

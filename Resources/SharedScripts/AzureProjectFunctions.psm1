@@ -88,8 +88,7 @@ Function Connect-Azure {
     If ($GeneralSettings.Subscription) { 
         If ($context.Subscription.id -ne $GeneralSettings.Subscription) { 
             Try {  
-                
-                 # Clearall
+                # Clearall, if needed: Clear-AzContext
                 Connect-AzAccount -Tenant $GeneralSettings.Tenant -Subscription $GeneralSettings.Subscription
                 Set-AzContext -SubscriptionId $GeneralSettings.Subscription -ErrorAction Stop
                 $Context = Get-AzContext 
@@ -191,11 +190,13 @@ Function Set-Policy {
             # if json-policy contains: "deployIfNotExists":
             # This resources can be put into a compliant state through Remediation via a newly generated managed identity:
             # https://docs.microsoft.com/nl-nl/azure/governance/policy/how-to/remediate-resources#how-remediation-security-works
+            $policyName = $policy.name
+            if ($policyName.Length -ge 63) { $policyName = $policyName.Substring(0, 63) } 
             if ($policy.deployIfNotExists) {
-                New-AzPolicyAssignment -Name $policy.name -PolicyDefinition $definition -Scope (Get-AzResourceGroup -Name $ResourceGroup).ResourceId -Location $Location -AssignIdentity -PolicyParameterObject $Params
+                New-AzPolicyAssignment -Name $policyName -PolicyDefinition $definition -Scope (Get-AzResourceGroup -Name $ResourceGroup).ResourceId -Location $Location -AssignIdentity -PolicyParameterObject $Params
             }
             else {
-                New-AzPolicyAssignment -Name $policy.name -PolicyDefinition $definition -Scope (Get-AzResourceGroup -Name $ResourceGroup).ResourceId -Location $Location -PolicyParameterObject $Params
+                New-AzPolicyAssignment -Name $policyName -PolicyDefinition $definition -Scope (Get-AzResourceGroup -Name $ResourceGroup).ResourceId -Location $Location -PolicyParameterObject $Params
             }
         }
     }

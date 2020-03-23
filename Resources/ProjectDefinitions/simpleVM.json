@@ -30,13 +30,26 @@
                 ]
             },
             {
+                "name": "allowed-managed-disk-size",
+                "policyFile": "allowed-managed-disk-size-policy.json",
+                "parameterFile": "allowed-managed-disk-size-parameters.json",
+                "type": "Custom",
+                "parameters": [
+                    {
+                        "name": "allowedMaxDiskSize",
+                        "value": 128
+                    }
+                ]
+            },
+            {
                 "name": "Allowed locations",
                 "type": "Built-in",
                 "parameters": [
                     {
                         "name": "listOfAllowedLocations",
                         "value": [
-                            "westeurope"
+                            "westeurope",
+                            "northeurope"
                         ]
                     }
                 ]
@@ -81,7 +94,7 @@
                 ]
             },
             {
-                "name": "The NSGs rules for web applications on IaaS should be hardened",
+                "name": "Internet-facing virtual machines should be protected with Network Security Groups",
                 "type": "Built-in",
                 "parameters": []
             },

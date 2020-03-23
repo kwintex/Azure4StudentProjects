@@ -1,7 +1,7 @@
 {
     "template": {
         "name": "CosmosDB",
-        "description": "Create/Manage/Use/Read Cosmos DB.",
+        "description": "Create/Manage/Use/Read Cosmos DB, only MongoDB database API is supported!",
         "location": "West Europe",
         "resourceGroupPrefix": "ComosDB-",
         "ARMtemplateStandard": [

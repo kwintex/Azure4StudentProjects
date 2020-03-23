@@ -12,13 +12,13 @@
         - Combined Policies (defined in a template)
         - [Custom] Roles (defined in a template)
         - Azure limits on this subscription (part of the subscription).
-	   
+
     .EXAMPLE
         ./Administration/Scripts/Add-AzureProject.ps1 -Template simpleVM -StopDate 2020-05-01 -Users foo@bar.com
 
     .EXAMPLE
         ./Administration/Scripts/Add-AzureProject.ps1 -Template webApp -GroupName Team1 -Budget 2 -StopDate 2020-02-01 -Users foo@bar.com
-        	   
+
 	.EXAMPLE
         ./Administration/Scripts/Add-AzureProject.ps1 -Template simpleVM -GroupName Team1 -Budget 10 -StopDate 2020-05-01 -Users foo@bar.com,bar@foo.com
 
@@ -56,10 +56,9 @@ Param (
     [ValidatePattern("^20\d{2}-\d{2}-\d{2}$")] 
     [string]$StopDate,
 
-    # List of users in the form of Hogeschool Utrecht - email addresses, to be found in Active Directory
-    # use a more generic regexp for other organisations: [ValidatePattern("^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$")] 
+    # List of users, validate e-mail addresses?
     [Parameter(Mandatory = $true)]
-    [ValidatePattern("^\w+([-+.']\w+)*@(student.|)hu.nl$")] 
+    [ValidatePattern("^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$")] 
     [string[]]$Users
 )
 
@@ -71,7 +70,7 @@ $WorkingDirectory = $PSScriptRoot
 Import-Module -Name "$($WorkingDirectory)/../../Resources/SharedScripts/AzureProjectFunctions.psm1" -Force # -Force if module was updated
 $Logfile = "$($WorkingDirectory)/../../Logs/AzureProjectAdministration.log"
 $ProjectDefinitionPathFile = "$($WorkingDirectory)/../../Resources/ProjectDefinitions/$($Template).json"# Project Definition File
-$CustomPolicyPath = "$($WorkingDirectory)/../../Resources/customPolicies/"                                    # Path to Custom Policy Definitions
+$CustomPolicyPath = "$($WorkingDirectory)/../../Resources/customPolicies/"                              # Path to Custom Policy Definitions
 $GeneralSettingsPathFile = "$($WorkingDirectory)/../../Settings/Settings.json"                          # Read Settings for this Subscription
 $StartDate = (Get-Date -format "yyyy-MM-01")
 $actionGroupRemoveResourceGroup = "RemoveRGBudgetAlert"                                                 # Name for action group create in the portal to remove the resource group

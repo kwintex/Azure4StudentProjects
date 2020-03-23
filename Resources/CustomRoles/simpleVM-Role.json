@@ -17,7 +17,8 @@
     "Microsoft.ResourceHealth/availabilityStatuses/read",
     "Microsoft.Resources/deployments/*",
     "Microsoft.Resources/subscriptions/resourceGroups/read",
-    "Microsoft.Storage/storageAccounts/*"
+    "Microsoft.Storage/storageAccounts/*",
+    "Microsoft.Consumption/Budgets/*/Read"
   ],
   "NotActions": [],
   "AssignableScopes": []

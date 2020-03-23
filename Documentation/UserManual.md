@@ -27,8 +27,8 @@ The life cycle of a project group consists of a number of steps:
 
 *Figure: Steps for onboarding a new project group on Azure. Sorry, Dutch only at this moment.*
 
-### Requesting a simple Virtual Machine
-After your new Resource Group is created. You can add resources to it. In case students selected the template “simpleVM” follow the next steps to create a Virtual Machine:
+### Example1: Requesting a simple Virtual Machine
+After your new Resource Group is created. You can add resources. In case you selected the template “simpleVM” follow the next steps to create a Virtual Machine:
 1. Logon to the Azure Portal and navigate to your resource group.
 2. Click the plus-sign to add a new resource. Select "Create a virtual machine".
 3. Choose one of the following options:
@@ -43,10 +43,26 @@ After your new Resource Group is created. You can add resources to it. In case s
    * B1S, 
    * B2MS, 
    * B2S
+6. Select "Standard SSD", or "Standard HDD" as your disk type.
 
 Note: Securing the Virtual Machine is your responsibility! If you don’t know how to accomplish this: ask your educator.
 
 <br/>
+
+### Example2: Requesting a Cosmosdb with MongoDB API
+After your new Resource Group is created. You can add resources. In case you selected the template “cosmosDB” follow the next steps to create a database and one or more collections:
+1. Logon to the Azure Portal and navigate to your resource group.
+2. Click the plus-sign to add a new resource. Type "Cosmos DB Account".
+3. Choose your subscription and Resource Group
+4. Fabricate a unique Account Name
+5. Choose "Azure Cosmos DB for MongoDB API" (that is not the default, but other choices are not allowed!)
+6. Select West-Europe as your region
+7. Accept all defaults.
+8. Click "Review + create"
+
+After the database is created, which takes about ten minutes, your database and collections can be created. Never use more than 1 database and do not alter throughput settings (400 RU/s is default).
+<br/>
+
 
 ## <a id="support"></a>Support Engineer
 > *As a Support Engineer I want to receive an overview of the projects and its spendings on a daily basis and expect minimal administration so that I am able to add this task to my daily work.*

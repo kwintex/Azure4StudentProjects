@@ -12,7 +12,13 @@
       "Microsoft.Resources/subscriptions/resourceGroups/read"
 
     ],
-    "NotActions": [],
+    "NotActions": [
+      "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/*",
+      "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/*",
+      "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/*",
+      "Microsoft.DocumentDB/databaseAccounts/tables/*",
+      "Microsoft.DocumentDB/databaseAccounts/notebookWorkspaces/*"
+    ],
     "AssignableScopes": []
   }
   
