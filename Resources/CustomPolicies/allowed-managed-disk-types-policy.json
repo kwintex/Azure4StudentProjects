@@ -1,0 +1,21 @@
+{
+	"if": {
+		"allOf": [
+			{
+				"field": "type",
+				"in": [
+					"Microsoft.Compute/disks"
+				]
+			},
+			{
+				"not": {
+					"field": "Microsoft.Compute/disks/sku.name",
+					"in": "[parameters('AllowedDisktypes')]"
+				}
+			}
+		]
+	},
+	"then": {
+		"effect": "deny"
+	}
+}

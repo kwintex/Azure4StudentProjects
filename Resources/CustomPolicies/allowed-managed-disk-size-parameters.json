@@ -1,0 +1,9 @@
+{
+	"allowedMaxDiskSize": {
+		"type": "integer",
+		"metadata": {
+			"description": "Max allowed managed disk size (GB)",
+			"displayName": "Allowed Max Disk Size"
+		}
+	}
+}

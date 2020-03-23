@@ -1,0 +1,9 @@
+{
+	"AllowedDisktypes": {
+		"type": "Array",
+		"metadata": {
+			"description": "The list of allowed disktypes. Example:  Standard_LRS (=Standard HDD), Premium_LRS (=Premium SSD), StandardSSD_LRS (=Standard SSD), UltraSSD_LRS (=Ultra Disk)",
+			"displayName": "Allowed disk Types"
+		}
+	}
+}

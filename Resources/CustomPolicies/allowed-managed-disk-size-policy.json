@@ -1,0 +1,19 @@
+{
+	"if": {
+		"allOf": [
+			{
+				"field": "type",
+				"in": [
+					"Microsoft.Compute/disks"
+				]
+			},
+			{
+				"value": "[greater(field('Microsoft.Compute/disks/diskSizeGB'),parameters('allowedMaxDiskSize'))]",
+				"equals": true
+			}
+		]
+	},
+	"then": {
+		"effect": "deny"
+	}
+}

@@ -92,7 +92,7 @@ function Remove-myResourceGroup {
     $budgets = Get-AzConsumptionBudget -ResourceGroupName $targetResourceGroup
     foreach ($budget in $budgets ) {
         write-host "Remove Budgets $($budget.Name)"
-        Remove-AzConsumptionBudget -name $budget.Name  -ResourceGroupName $targetResourceGroup
+        Remove-AzConsumptionBudget -name $budget.Name  -ResourceGroupName $targetResourceGroup -ErrorAction Stop
     }
     Invoke-RestMethod -Uri https://api.sendgrid.com/v3/mail/send -Method Post -Headers $headers -Body $bodyJson | Out-Null
 }
