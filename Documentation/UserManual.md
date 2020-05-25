@@ -45,7 +45,12 @@ After your new Resource Group is created. You can add resources. In case you sel
    * B2S
 6. Select "Standard SSD", or "Standard HDD" as your disk type.
 
-Note: Securing the Virtual Machine is your responsibility! If you don’t know how to accomplish this: ask your educator.
+Securing the Virtual Machine is your responsibility! If you don’t know how to accomplish this: ask your educator.
+
+Your VM will be shutdown at 17:00 (localtime) to save costs. If you want it differently study the contents of the file Stop-VMs.ps1 in Setup/Runbooks and you'll find a solution.
+
+If you want your server to be started as well, you have to provide a tag "startup" to the server with a value of "<[all|weekdays]-[0-23]>" in which "all" means "every day of the week". "weekdays" means starting your server on mon,tue,wed,thu,fri. The number after the dash is the starting hour expressed in UTC.
+Note: Schedule for this runbook is Hourly this means that if you specify "all-9" as value for your startup-tag, your -deallocated- server will be started every day somewhere between 9:00 and 10:00 UTC.
 
 <br/>
 

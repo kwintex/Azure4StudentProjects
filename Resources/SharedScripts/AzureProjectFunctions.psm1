@@ -89,7 +89,7 @@ Function Connect-Azure {
         If ($context.Subscription.id -ne $GeneralSettings.Subscription) { 
             Try {  
                 # Clearall, if needed: Clear-AzContext
-                Connect-AzAccount -Tenant $GeneralSettings.Tenant -Subscription $GeneralSettings.Subscription
+                Connect-AzAccount -Tenant $GeneralSettings.Tenant -Subscription $GeneralSettings.Subscription -UseDeviceAuthentication
                 Set-AzContext -SubscriptionId $GeneralSettings.Subscription -ErrorAction Stop
                 $Context = Get-AzContext 
             } 

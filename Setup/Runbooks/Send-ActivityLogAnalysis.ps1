@@ -46,7 +46,7 @@ $ActivityObject = @()
 $Timezone = "W. Europe Standard Time"
 $cstzone = [System.TimeZoneInfo]::FindSystemTimeZoneById($Timezone)
 $analysedays = -1  # This means, get logging: "24 hours from now".
-$timePeriodFrom =  (get-date).AddDays(-1).ToString("d-M-yyyy (HH:MM)")   # 24 hours ago, for mail body
+$timePeriodFrom = (get-date).AddDays(-1).ToString("d-M-yyyy (HH:MM)")   # 24 hours ago, for mail body
 $connectionName = "AzureRunAsConnection"
 
 try {
@@ -224,75 +224,75 @@ foreach ($azlog in $azlogs) {
 }
 
 
+if ($ActivityObject.Length -ne 0) {
+    ### Create Mail contents ###
+    $html = "<div style: overflow-x:auto> <HTML><HEAD><TITLE>Azure for StudentProjects</TITLE>"
+    $html += "<STYLE>.header {font: normal 20px/150% Arial, Helvetica, sans-serif; color: #102b59; font-weight: bold;} .tableheader {font: normal 18px/150% Arial, Helvetica, sans-serif; color: #102b59; font-weight: bold;} .normal {font: normal 15px/150% Arial, Helvetica, sans-serif; color: #102b59;} .datagrid table { overflow-x:auto; border-collapse: collapse; border: 1px solid #E1EEF4; text-align: left; width: 1600px; } .datagrid {overflow-x:auto; font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff; overflow: hidden; }.datagrid table td, .datagrid table th { padding: 2px 10px; }.datagrid table thead th {background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');background-color:#006699; color:#FFFFFF; font-size: 12px; font-weight: bold; border-left: 1px solid #0070A8; } .datagrid table thead th:first-child { border: 1px solid #E1EEF4; }.datagrid table tbody td { color: #00557F; border-left: 1px solid #E1EEF4;font-size: 12px;font-weight: normal; text-align: left;}.datagrid table tbody .alt td { background: #E1EEf4; color: #00557F; }.datagrid table tbody td:first-child { border-left: 1px solid #E1EEF4; }.datagrid table tbody tr:last-child td { border-bottom: 1px solid #E1EEF4; }</STYLE></HEAD><BODY>"
+    $html += "<div class='header'>Report: Azure for Students Activity Log Report<br></div>"
+    $html += "<div class='normal'>Activity Log from the latest 24 hours starting from $($timePeriodFrom) GMT.<br>"
+    $html += "Note, Each table contains a single Resource Group Name (sorted by RG-Name, Ascending). Within each table, rows are sorted by DateTime (Descending).<br>Click on the CorrelationId link in the latest column for more information.<br></div>"
 
-### Create Mail contents ###
+    $ActivityObject = $ActivityObject | Sort-Object -Property @{Expression = "ResourceGroupName"; Descending = $False }, @{Expression = "EventTimestamp"; Descending = $True }
 
-$html = "<div style: overflow-x:auto> <HTML><HEAD><TITLE>Azure for StudentProjects</TITLE>"
-$html += "<STYLE>.header {font: normal 20px/150% Arial, Helvetica, sans-serif; color: #102b59; font-weight: bold;} .tableheader {font: normal 18px/150% Arial, Helvetica, sans-serif; color: #102b59; font-weight: bold;} .normal {font: normal 15px/150% Arial, Helvetica, sans-serif; color: #102b59;} .datagrid table { overflow-x:auto; border-collapse: collapse; border: 1px solid #E1EEF4; text-align: left; width: 1600px; } .datagrid {overflow-x:auto; font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff; overflow: hidden; }.datagrid table td, .datagrid table th { padding: 2px 10px; }.datagrid table thead th {background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');background-color:#006699; color:#FFFFFF; font-size: 12px; font-weight: bold; border-left: 1px solid #0070A8; } .datagrid table thead th:first-child { border: 1px solid #E1EEF4; }.datagrid table tbody td { color: #00557F; border-left: 1px solid #E1EEF4;font-size: 12px;font-weight: normal; text-align: left;}.datagrid table tbody .alt td { background: #E1EEf4; color: #00557F; }.datagrid table tbody td:first-child { border-left: 1px solid #E1EEF4; }.datagrid table tbody tr:last-child td { border-bottom: 1px solid #E1EEF4; }</STYLE></HEAD><BODY>"
-$html += "<div class='header'>Report: Azure for Students Activity Log Report<br></div>"
-$html += "<div class='normal'>Activity Log from the latest 24 hours starting from $($timePeriodFrom) GMT.<br>"
-$html += "Note, Each table contains a single Resource Group Name (sorted by RG-Name, Ascending). Within each table, rows are sorted by DateTime (Descending).<br>Click on the CorrelationId link in the latest column for more information.'<br></div>"
+    $oldresourcegroup = "none" 
+    foreach ($Activity in $ActivityObject) {
 
-$ActivityObject = $ActivityObject | Sort-Object -Property @{Expression = "ResourceGroupName"; Descending = $False }, @{Expression = "EventTimestamp"; Descending = $True }
-
-$oldresourcegroup = "none" 
-foreach ($Activity in $ActivityObject) {
-
-    if (($Activity.ResourceGroupName -ne $oldresourcegroup ) -and ($null -ne $Activity.ResourceGroupName) ) {
-        if ($oldresourcegroup -ne "none") {
-            $html += "</tbody></TABLE></div></div>"
+        if (($Activity.ResourceGroupName -ne $oldresourcegroup ) -and ($null -ne $Activity.ResourceGroupName) ) {
+            if ($oldresourcegroup -ne "none") {
+                $html += "</tbody></TABLE></div></div>"
+            }
+            $oldresourcegroup = $Activity.ResourceGroupName 
+            $html += "<div class='tableheader'><br>$($Activity.ResourceGroupName)</div>"
+            $html += "<div class='datagrid'><div style='overflow-x:auto;'>"
+            $html += "<TABLE width: 1600px>"
+            $html += "<thead><TR><th width: 200px>Name</th><th width: 200px>ResourceType</th><th width: 400px>Operation</th><th width: 100px>EventTimestamp</th><th width: 100px>Status</th><th width: 400px>Details</th><th width: 200px>Caller</th><th width: 200px>Name</th><th width: 300px>CorrelationId</th></thead><tbody>"
         }
-        $oldresourcegroup = $Activity.ResourceGroupName 
-        $html += "<div class='tableheader'><br>$($Activity.ResourceGroupName)</div>"
-        $html += "<div class='datagrid'><div style='overflow-x:auto;'>"
-        $html += "<TABLE width: 1600px>"
-        $html += "<thead><TR><th width: 200px>Name</th><th width: 200px>ResourceType</th><th width: 400px>Operation</th><th width: 100px>EventTimestamp</th><th width: 100px>Status</th><th width: 400px>Details</th><th width: 200px>Caller</th><th width: 200px>Name</th><th width: 300px>CorrelationId</th></thead><tbody>"
+
+        if ($null -ne $oldresourcegroup) {
+            $csttime = [System.TimeZoneInfo]::ConvertTimeFromUtc(($Activity.EventTimestamp).ToUniversalTime(), $cstzone)
+            $linktime = $Activity.EventTimestamp.AddDays(-1).ToString("yyyy-MM-ddTHH:mm:ss")
+            $linktime2 = (Get-Date).ToString("yyyy-MM-ddTHH:mm:ss")
+            $DetailLink = [uri]::EscapeUriString("https://portal.azure.com/#blade/Microsoft_Azure_ActivityLog/ActivityLogBlade/queryInputs/{""query"":{""searchString"":""$($Activity.CorrelationId)"",""timeSpan"":""3"",""startTime"":""$linktime"",""endTime"":""$linktime2"",""subscriptions"":[""$($Activity.SubscriptionId)""]}}")
+            $DetailLink = "<a href=""$DetailLink"">$($Activity.CorrelationId)</a>"
+            $html += "<TR><TD width: 200px>$($Activity.Name)</TD><TD width: 200px>$($Activity.ResourceType)</TD><TD width: 400px>$($Activity.Operation)</TD><TD width: 100px>$($csttime)</TD><TD width: 100px>$($Activity.Status )</TD><TD width: 400px>$($Activity.Details)</TD><TD width: 200px>$($Activity.Caller)</TD><TD width: 200px>$($Activity.ClaimName)</TD><TD width: 200px>$($DetailLink)</TD>"
+        }
     }
 
-    if ($null -ne $oldresourcegroup) {
-        $csttime = [System.TimeZoneInfo]::ConvertTimeFromUtc(($Activity.EventTimestamp).ToUniversalTime(), $cstzone)
-        $linktime = $Activity.EventTimestamp.AddDays(-1).ToString("yyyy-MM-ddTHH:mm:ss")
-        $linktime2 = (Get-Date).ToString("yyyy-MM-ddTHH:mm:ss")
-        $DetailLink = [uri]::EscapeUriString("https://portal.azure.com/#blade/Microsoft_Azure_ActivityLog/ActivityLogBlade/queryInputs/{""query"":{""searchString"":""$($Activity.CorrelationId)"",""timeSpan"":""3"",""startTime"":""$linktime"",""endTime"":""$linktime2"",""subscriptions"":[""$($Activity.SubscriptionId)""]}}")
-        $DetailLink = "<a href=""$DetailLink"">$($Activity.CorrelationId)</a>"
-        $html += "<TR><TD width: 200px>$($Activity.Name)</TD><TD width: 200px>$($Activity.ResourceType)</TD><TD width: 400px>$($Activity.Operation)</TD><TD width: 100px>$($csttime)</TD><TD width: 100px>$($Activity.Status )</TD><TD width: 400px>$($Activity.Details)</TD><TD width: 200px>$($Activity.Caller)</TD><TD width: 200px>$($Activity.ClaimName)</TD><TD width: 200px>$($DetailLink)</TD>"
+    $html += "</tbody></TABLE></div></div>"
+    $html += "</BODY></HTML>"
+
+
+    ### Prepare Mail ###
+    $VaultName = "Azure4StudentPrAutVault"
+    $SENDGRID_API_KEY = (Get-AzKeyVaultSecret -VaultName $VaultName -Name "SendGridAPIKey").SecretValueText
+    $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+    $headers.Add("Authorization", "Bearer " + $SENDGRID_API_KEY)
+    $headers.Add("Content-Type", "application/json")
+
+    $tos = @()
+    foreach ($to in $destEmailAddress) {
+        $tos += @{email = $to }
     }
-}
 
-$html += "</tbody></TABLE></div></div>"
-$html += "</BODY></HTML>"
-
-
-### Prepare Mail ###
-$VaultName = "Azure4StudentPrAutVault"
-$SENDGRID_API_KEY = (Get-AzKeyVaultSecret -VaultName $VaultName -Name "SendGridAPIKey").SecretValueText
-$headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-$headers.Add("Authorization", "Bearer " + $SENDGRID_API_KEY)
-$headers.Add("Content-Type", "application/json")
-
-$tos = @()
-foreach ($to in $destEmailAddress) {
-    $tos += @{email = $to }
-}
-
-$body = @{
-    personalizations = @(
-        @{
-            to = $tos    
+    $body = @{
+        personalizations = @(
+            @{
+                to = $tos    
+            }
+        )
+        from             = @{
+            email = $fromEmailAddress
         }
-    )
-    from             = @{
-        email = $fromEmailAddress
+        subject          = $subject
+        content          = @(
+            @{
+                type  = "text/html"
+                value = $html
+            }
+        )
     }
-    subject          = $subject
-    content          = @(
-        @{
-            type  = "text/html"
-            value = $html
-        }
-    )
-}
-$bodyJson = $body | ConvertTo-Json -Depth 4
+    $bodyJson = $body | ConvertTo-Json -Depth 4
 
-### Send Mail ###
-Invoke-RestMethod -Uri https://api.sendgrid.com/v3/mail/send -Method Post -Headers $headers -Body $bodyJson
+    ### Send Mail ###
+    Invoke-RestMethod -Uri https://api.sendgrid.com/v3/mail/send -Method Post -Headers $headers -Body $bodyJson
+}
